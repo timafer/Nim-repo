@@ -10,7 +10,7 @@ namespace Nim
     {
         public static void Main(string[] args)
         {
-
+            Console.WriteLine("This is a test to see who wrote what...");
         }
     }
 }
