@@ -29,7 +29,7 @@ namespace Nim
         }
         public void InitializeBoard()
         {
-            for(int r = 0; r < visual.Length; r++)
+            for(int r = 0; r < visual.GetLength(0); r++)
             {
                 int columns = (r * 2) + 3;
                 for(int c = 0; c < columns; c++)
