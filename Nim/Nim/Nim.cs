@@ -14,7 +14,6 @@ namespace Nim
         {
             Console.WriteLine("This is start");
             InitializeBoard();
-<<<<<<< HEAD
             PromptUser();
             Console.WriteLine(PrintBoard());
         }
@@ -43,9 +42,8 @@ namespace Nim
                 }
             }
             return pieceTotal;
-=======
             Console.WriteLine(PrintBoard());
->>>>>>> origin/master
+
         }
 
         public string PrintBoard()
