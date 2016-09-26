@@ -27,5 +27,16 @@ namespace Nim
             }
             return output;
         }
+        public void InitializeBoard()
+        {
+            for(int r = 0; r < visual.Length; r++)
+            {
+                int columns = (r * 2) + 3;
+                for(int c = 0; c < columns; c++)
+                {
+                    visual[r, c] = 'o';
+                }
+            }
+        }
     }
 }
