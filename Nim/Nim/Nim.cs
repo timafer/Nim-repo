@@ -13,5 +13,19 @@ namespace Nim
         {
             Console.WriteLine("This is start");
         }
+
+        public string PrintBoard()
+        {
+            string output = "";
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    output += visual[i, j];
+                }
+                output += "\n";
+            }
+            return output;
+        }
     }
 }
