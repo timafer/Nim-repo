@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Nim
 {
-    public class Program
+    public class Nim
     {
-        public static void Main(string[] args)
+        public char[,] visual = new char[3, 7];
+        public void Start()
         {
-            Console.WriteLine("This is a test to see who wrote what...");
+            Console.WriteLine("This is start");
         }
     }
 }
