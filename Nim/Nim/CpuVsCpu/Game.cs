@@ -36,6 +36,7 @@ namespace Nim.CpuVsCpu
                     break;
                 case 2:
                     player1 = new UserPlayer();
+                    player2 = new RandCpu();
                     break;
                 case 3:
                     player1 = new RandCpu();
