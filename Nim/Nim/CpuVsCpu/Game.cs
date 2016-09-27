@@ -15,9 +15,10 @@ namespace Nim.CpuVsCpu
             new char[] {'o', 'o', 'o', 'o', 'o', 'o', 'o'}
         };
         private RandCpu player1 = new RandCpu();
-        private RandCpu player2 = new RandCpu();
-        private LearningCPU learnP2 = new LearningCPU();
-        private List<int[]> previousMoves = new List<int[]>();
+        private RandCpu temp = new RandCpu();
+        private LearningCPU player2 = new LearningCPU();
+        private List<State> previousStates = new List<State>();
+
         private bool isP1Turn = true;
 
         /// <summary>
@@ -34,11 +35,13 @@ namespace Nim.CpuVsCpu
                 MakeMoves();
                 gameOver = CheckGameOver();
                 Console.WriteLine(PrintBoard());
-                System.Threading.Thread.Sleep(1500);
+                System.Threading.Thread.Sleep(500);
             }
             while (!gameOver);
 
             bool p1IsWinner = isP1Turn;
+
+            RateMoves();
 
             if (p1IsWinner)
             {
@@ -76,8 +79,51 @@ namespace Nim.CpuVsCpu
             else
             {
                 return true;
-
             }
+        }
+
+        public void RateMoves()
+        {
+            int totalMoves = previousStates.Count;
+
+            if (totalMoves % 2 == 0)
+            {
+                for (int i = totalMoves - 1; i > 0; i--)
+                {
+                    int mtplr = -1;
+
+                    if (i % 2 == 0)
+                    {
+                        mtplr = 1;
+                    }
+
+                    previousStates[i].ValueOfWorth = ((i + 1) / (double)totalMoves) * mtplr;
+                }
+            }
+            else
+            {
+                for (int i = totalMoves - 1; i > 0; i--)
+                {
+                    int mtplr = -1;
+
+                    if (i % 2 != 0)
+                    {
+                        mtplr = 1;
+                    }
+
+                    previousStates[i].ValueOfWorth = ((i + 1) / (double)totalMoves) * mtplr;
+                }
+            }
+
+            foreach (State temp in previousStates)
+            {
+                player2.AddMove(temp);
+            }
+        }
+
+        public char[][] CopyArrayLinq(char[][] source)
+        {
+            return source.Select(s => s.ToArray()).ToArray();
         }
 
         /// <summary>
@@ -126,6 +172,9 @@ namespace Nim.CpuVsCpu
                 }
                 while (!isVaildMove);
 
+                char[][] copyArray = CopyArrayLinq(visual);
+                previousStates.Add(new State(move, 0, copyArray));
+
                 int numRemoved = 0;
                 int position = 0;
                 int row = move[0];
@@ -144,7 +193,6 @@ namespace Nim.CpuVsCpu
                     }
                 }
 
-                previousMoves.Add(move);
                 Console.WriteLine("Player 1 removed " + removeAmount + " from row " + row + ".");
 
             }
@@ -160,6 +208,9 @@ namespace Nim.CpuVsCpu
                     isVaildMove = CheckRow(move[0], move[1]);
                 }
                 while (!isVaildMove);
+
+                char[][] copyArray = CopyArrayLinq(visual);
+                previousStates.Add(new State(move, 0, copyArray));
 
                 int numRemoved = 0;
                 int position = 0;
@@ -180,7 +231,6 @@ namespace Nim.CpuVsCpu
                 }
                 while (numRemoved != removeAmount);
 
-                previousMoves.Add(move);
                 Console.WriteLine("Player 2 removed " + removeAmount + " from row " + row + ".");
             }
 
@@ -207,9 +257,5 @@ namespace Nim.CpuVsCpu
             return output;
         }
 
-        public void RateMoves()
-        {
-
-        }
     }
 }
