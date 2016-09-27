@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Nim.Players;
 
 namespace Nim.CpuVsCpu
 {
@@ -14,18 +15,39 @@ namespace Nim.CpuVsCpu
             new char[] {'o', 'o', 'o', 'o', 'o'},
             new char[] {'o', 'o', 'o', 'o', 'o', 'o', 'o'}
         };
-        private RandCpu player1 = new RandCpu();
-        private RandCpu temp = new RandCpu();
-        private LearningCPU player2 = new LearningCPU();
+        private Player player1;
+        private Player player2;
+        private LearningCPU learnP2 = new LearningCPU();
         private List<State> previousStates = new List<State>();
-
         private bool isP1Turn = true;
 
         /// <summary>
         /// Method that starts the CPU game
         /// </summary>
-        public void Start()
+        /// 
+
+        private void SetGameMode(int s)
         {
+            switch (s)
+            {
+                case 1:
+                    player1 = new UserPlayer();
+                    player2 = new UserPlayer();
+                    break;
+                case 2:
+                    player1 = new UserPlayer();
+                    player2 = new RandCpu();
+                    break;
+                case 3:
+                    player1 = new RandCpu();
+                    player2 = new RandCpu();
+                    break;
+                    //needs a case four no AI yet
+            }
+        }
+        public void Start(int selection)
+        {
+            SetGameMode(selection);
             Console.WriteLine("This is start");
             Console.WriteLine(PrintBoard());
             bool gameOver = false;
@@ -117,7 +139,7 @@ namespace Nim.CpuVsCpu
 
             foreach (State temp in previousStates)
             {
-                player2.AddMove(temp);
+                learnP2.AddMove(temp);
             }
         }
 
@@ -166,6 +188,10 @@ namespace Nim.CpuVsCpu
                 int[] move = null;
                 do
                 {
+                    if (player1.GetType() == typeof(UserPlayer))
+                    {
+                        Console.WriteLine(PrintBoard());
+                    }
                     move = player1.ChooseMove();
 
                     isVaildMove = CheckRow(move[0], move[1]);
@@ -193,7 +219,7 @@ namespace Nim.CpuVsCpu
                     }
                 }
 
-                Console.WriteLine("Player 1 removed " + removeAmount + " from row " + row + ".");
+                Console.WriteLine("Player 1 removed " + removeAmount + " from row " + RowIntToChar(row) + ".");
 
             }
             else
@@ -203,7 +229,11 @@ namespace Nim.CpuVsCpu
                 int[] move = null;
                 do
                 {
-                    move = player1.ChooseMove();
+                    if (player2.GetType() == typeof(UserPlayer))
+                    {
+                        Console.WriteLine(PrintBoard());
+                    }
+                    move = player2.ChooseMove();
 
                     isVaildMove = CheckRow(move[0], move[1]);
                 }
@@ -231,7 +261,7 @@ namespace Nim.CpuVsCpu
                 }
                 while (numRemoved != removeAmount);
 
-                Console.WriteLine("Player 2 removed " + removeAmount + " from row " + row + ".");
+                Console.WriteLine("Player 2 removed " + removeAmount + " from row " + RowIntToChar(row) + ".");
             }
 
             isP1Turn = !isP1Turn;
@@ -243,11 +273,12 @@ namespace Nim.CpuVsCpu
         /// <returns>string to be printed out</returns>
         public string PrintBoard()
         {
-            char rowLabel = '0';
+            int rowLabel = 0;
             string output = "";
             for (int i = 0; i < 3; i++)
             {
-                output += rowLabel++ + " ";
+                output += RowIntToChar(rowLabel) + " ";
+                rowLabel++;
                 for (int j = 0; j < visual[i].Count(); j++)
                 {
                     output += visual[i][j];
@@ -257,5 +288,22 @@ namespace Nim.CpuVsCpu
             return output;
         }
 
+        private char RowIntToChar(int r)//Changes between A,B,C to 0,1,2
+        {
+            char row = 'z';
+            switch (r)
+            {
+                case 0:
+                    row = 'A';
+                    break;
+                case 1:
+                    row = 'B';
+                    break;
+                case 2:
+                    row = 'C';
+                    break;
+            }
+            return row;
+        }
     }
 }

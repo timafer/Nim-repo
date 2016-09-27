@@ -44,12 +44,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CpuVsCpu\Game.cs" />
-    <Compile Include="CpuVsCpu\LearningCPU.cs" />
     <Compile Include="CpuVsCpu\RandCpu.cs" />
     <Compile Include="CpuVsCpu\State.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="Nim.cs" />
+    <Compile Include="Players\Player.cs" />
     <Compile Include="Start.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Players\UserPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Nim.Players;
 
-namespace Nim.CpuVsCpu
+namespace Nim.Players
 {
-    public class RandCpu: Player
+    public abstract class Player
     {
-        
-        public override int[] ChooseMove()
+        public virtual int[] ChooseMove()
         {
             int[] move = new int[2];
 
