@@ -35,20 +35,46 @@ namespace Nim
             switch (selection)
             {
                 case 1:
+                    Console.WriteLine("Starting Player vs Player");
                     Nim pvp = new Nim();
                     pvp.Start();
                     break;
                 case 2:
+                    Console.WriteLine("Starting Player vs Computer");
                     break;
                 case 3:
+                    Console.WriteLine("Starting Computer vs Computer");
                     Game cvc = new Game();
                     cvc.Start();
                     break;
                 case 4:
+                    Console.WriteLine("Starting Computer vs Smart Computer");
                     break;
                 default:
                     Console.WriteLine("ERROR:Coder error bad selection");
                     break;
+            }
+        }
+        public void PlayAgain()
+        {
+            bool valid = false;
+            while (!valid)
+            {
+                Console.WriteLine("Do you want to make a diffrent selection y/n");
+                string s = Console.ReadLine();
+                if (char.ToLower(s[0]) == 'y')
+                {
+                    Select();
+                    valid = true;
+                }
+                else if (char.ToLower(s[0]) == 'n')
+                {
+                    valid = true;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input");
+                }
             }
         }
     }
