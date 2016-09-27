@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nim.CpuVsCpu;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Nim
     {
         public static void Main(string[] args)
         {
-            Nim n = new Nim();
+            Game n = new Game();
             n.Start();
         }
     }
