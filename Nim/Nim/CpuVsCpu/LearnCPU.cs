@@ -19,7 +19,24 @@ namespace Nim.CpuVsCpu
 
         public void AddMove(State state)
         {
-            learnedMoves.Add(state);
+            foreach (State s in learnedMoves)
+            {
+                if (s.StateOfBoard == state.StateOfBoard)
+                {
+                    if (s.MoveMade == state.MoveMade)
+                    {
+                        s.ValueOfWorth += state.ValueOfWorth;
+                    }
+                    else
+                    {
+                        learnedMoves.Add(state);
+                    }
+                }
+                else
+                {
+                    learnedMoves.Add(state);
+                }
+            }
         }
 
         /// <summary>
