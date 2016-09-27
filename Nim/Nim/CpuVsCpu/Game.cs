@@ -141,7 +141,7 @@ namespace Nim.CpuVsCpu
 
             foreach (State temp in previousStates)
             {
-                pla.AddMove(temp);
+                learnP2.AddMove(temp);
             }
         }
 
