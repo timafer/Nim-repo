@@ -15,23 +15,6 @@ namespace Nim.CpuVsCpu
             learnedMoves.Add(state);
         }
 
-
-        public string Temp(char[][] visual)
-        {
-            char rowLabel = '0';
-            string output = "";
-            for (int i = 0; i < 3; i++)
-            {
-                output += rowLabel++ + " ";
-                for (int j = 0; j < visual[i].Count(); j++)
-                {
-                    output += visual[i][j];
-                }
-                output += "\n";
-            }
-            return output;
-        }
-
         /// <summary>
         /// Sorts the learned moves by value
         /// </summary>
