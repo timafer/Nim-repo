@@ -14,15 +14,17 @@ namespace Nim.CpuVsCpu
             new char[] {'o', 'o', 'o', 'o', 'o'},
             new char[] {'o', 'o', 'o', 'o', 'o', 'o', 'o'}
         };
-        private RandCpu player1 = new RandCpu();
+        private UserPlayer player1 = new UserPlayer();
+        //private RandCpu player1 = new RandCpu();
         private RandCpu player2 = new RandCpu();
-        private LearningCPU learnP2 = new LearningCPU();
+        //private LearningCPU learnP2 = new LearningCPU();
         private List<int[]> previousMoves = new List<int[]>();
         private bool isP1Turn = true;
 
         /// <summary>
         /// Method that starts the CPU game
         /// </summary>
+        /// 
         public void Start()
         {
             Console.WriteLine("This is start");
@@ -120,6 +122,10 @@ namespace Nim.CpuVsCpu
                 int[] move = null;
                 do
                 {
+                    if(player1.GetType() == typeof(UserPlayer))
+                    {
+                        Console.WriteLine(PrintBoard());
+                    }
                     move = player1.ChooseMove();
 
                     isVaildMove = CheckRow(move[0], move[1]);
@@ -155,7 +161,11 @@ namespace Nim.CpuVsCpu
                 int[] move = null;
                 do
                 {
-                    move = player1.ChooseMove();
+                    if (player2.GetType() == typeof(UserPlayer))
+                    {
+                        Console.WriteLine(PrintBoard());
+                    }
+                    move = player2.ChooseMove();
 
                     isVaildMove = CheckRow(move[0], move[1]);
                 }
@@ -193,11 +203,12 @@ namespace Nim.CpuVsCpu
         /// <returns>string to be printed out</returns>
         public string PrintBoard()
         {
-            char rowLabel = '0';
+            int rowLabel = 0;
             string output = "";
             for (int i = 0; i < 3; i++)
             {
-                output += rowLabel++ + " ";
+                output += RowIntToChar(rowLabel) + " ";
+                rowLabel++;
                 for (int j = 0; j < visual[i].Count(); j++)
                 {
                     output += visual[i][j];
@@ -205,6 +216,24 @@ namespace Nim.CpuVsCpu
                 output += "\n";
             }
             return output;
+        }
+
+        private char RowIntToChar(int r)//Changes between A,B,C to 0,1,2
+        {
+            char row = 'z';
+            switch (r)
+            {
+                case 0:
+                    row = 'A';
+                    break;
+                case 1:
+                    row = 'B';
+                    break;
+                case 2:
+                    row = 'C';
+                    break;
+            }
+            return row;
         }
 
         public void RateMoves()
