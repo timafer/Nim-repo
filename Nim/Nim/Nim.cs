@@ -33,10 +33,6 @@ namespace Nim
             return output;
         }
 
-
-
-
-
         public void InitializeBoard()
         {
             for (int r = 0; r < visual.GetLength(0); r++)

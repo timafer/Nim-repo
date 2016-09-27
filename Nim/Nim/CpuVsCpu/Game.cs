@@ -17,7 +17,6 @@ namespace Nim.CpuVsCpu
         };
         private Player player1;
         private Player player2;
-        private LearnCPU learnP2 = new LearnCPU();
         private List<State> previousStates = new List<State>();
         private bool isP1Turn = true;
 
@@ -42,7 +41,10 @@ namespace Nim.CpuVsCpu
                     player1 = new RandCpu();
                     player2 = new RandCpu();
                     break;
-                    //needs a case four no AI yet
+                case 4:
+                    player1 = new RandCpu();
+                    player2 = new LearnCPU(visual);
+                    break;
             }
         }
         public void Start(int selection)
@@ -139,7 +141,7 @@ namespace Nim.CpuVsCpu
 
             foreach (State temp in previousStates)
             {
-                learnP2.AddMove(temp);
+                pla.AddMove(temp);
             }
         }
 
@@ -233,6 +235,7 @@ namespace Nim.CpuVsCpu
                     {
                         Console.WriteLine(PrintBoard());
                     }
+
                     move = player2.ChooseMove();
 
                     isVaildMove = CheckRow(move[0], move[1]);
