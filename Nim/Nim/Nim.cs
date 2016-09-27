@@ -33,9 +33,9 @@ namespace Nim
             return output;
         }
 
-        
 
-        
+
+
 
         public void InitializeBoard()
         {

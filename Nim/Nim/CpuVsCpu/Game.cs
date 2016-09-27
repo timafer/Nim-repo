@@ -17,7 +17,7 @@ namespace Nim.CpuVsCpu
         };
         private Player player1;
         private Player player2;
-        private LearningCPU learnP2 = new LearningCPU();
+        private LearnCPU learnP2 = new LearnCPU();
         private List<State> previousStates = new List<State>();
         private bool isP1Turn = true;
 
