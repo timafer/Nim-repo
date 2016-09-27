@@ -32,23 +32,24 @@ namespace Nim
         }
         public void UseSelection(int selection)
         {
+            Game game = new Game();
             switch (selection)
             {
                 case 1:
                     Console.WriteLine("Starting Player vs Player");
-                    Nim pvp = new Nim();
-                    pvp.Start();
+                    game.Start(selection);
                     break;
                 case 2:
                     Console.WriteLine("Starting Player vs Computer");
+                    game.Start(selection);
                     break;
                 case 3:
                     Console.WriteLine("Starting Computer vs Computer");
-                    Game cvc = new Game();
-                    cvc.Start();
+                    game.Start(selection);
                     break;
                 case 4:
                     Console.WriteLine("Starting Computer vs Smart Computer");
+                    game.Start(selection);
                     break;
                 default:
                     Console.WriteLine("ERROR:Coder error bad selection");

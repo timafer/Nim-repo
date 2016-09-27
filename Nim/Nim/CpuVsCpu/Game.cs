@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Nim.Players;
 
 namespace Nim.CpuVsCpu
 {
@@ -14,9 +15,8 @@ namespace Nim.CpuVsCpu
             new char[] {'o', 'o', 'o', 'o', 'o'},
             new char[] {'o', 'o', 'o', 'o', 'o', 'o', 'o'}
         };
-        private UserPlayer player1 = new UserPlayer();
-        //private RandCpu player1 = new RandCpu();
-        private RandCpu player2 = new RandCpu();
+        private Player player1;
+        private Player player2;
         //private LearningCPU learnP2 = new LearningCPU();
         private List<int[]> previousMoves = new List<int[]>();
         private bool isP1Turn = true;
@@ -25,8 +25,28 @@ namespace Nim.CpuVsCpu
         /// Method that starts the CPU game
         /// </summary>
         /// 
-        public void Start()
+
+        private void SetGameMode(int s)
         {
+            switch (s)
+            {
+                case 1:
+                    player1 = new UserPlayer();
+                    player2 = new UserPlayer();
+                    break;
+                case 2:
+                    player1 = new UserPlayer();
+                    break;
+                case 3:
+                    player1 = new RandCpu();
+                    player2 = new RandCpu();
+                    break;
+               //needs a case four no AI yet
+            }
+        }
+        public void Start(int selection)
+        {
+            SetGameMode(selection);
             Console.WriteLine("This is start");
             Console.WriteLine(PrintBoard());
             bool gameOver = false;
@@ -151,7 +171,7 @@ namespace Nim.CpuVsCpu
                 }
 
                 previousMoves.Add(move);
-                Console.WriteLine("Player 1 removed " + removeAmount + " from row " + row + ".");
+                Console.WriteLine("Player 1 removed " + removeAmount + " from row " + RowIntToChar(row) + ".");
 
             }
             else
@@ -191,7 +211,7 @@ namespace Nim.CpuVsCpu
                 while (numRemoved != removeAmount);
 
                 previousMoves.Add(move);
-                Console.WriteLine("Player 2 removed " + removeAmount + " from row " + row + ".");
+                Console.WriteLine("Player 2 removed " + removeAmount + " from row " + RowIntToChar(row) + ".");
             }
 
             isP1Turn = !isP1Turn;

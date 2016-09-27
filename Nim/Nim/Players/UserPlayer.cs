@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nim
+namespace Nim.Players
 {
-    public class UserPlayer
+    public class UserPlayer: Player
     {
 
         private int RowCharToInt(char r)//Changes between A,B,C to 0,1,2
@@ -36,15 +36,27 @@ namespace Nim
             return row;
         }
 
-        public int[] ChooseMove()//will prompt user for row and number of pieces to take
+        public override int[] ChooseMove()//will prompt user for row and number of pieces to take
         {
             int[] move = new int[2];
             char row;
             int rowInt;
             int piecesToTake;
             string pieces;
-            Console.WriteLine("Please enter which row you want to take from (A,B, or C):: ");
-            row = Console.ReadLine().ElementAt(0);
+            bool selectRow = true;
+            do
+            {
+                Console.Write("Please enter which row you want to take from (A,B, or C):: ");
+                row = Console.ReadLine().ElementAt(0);
+                if (row == 'A' || row == 'B' || row == 'C' || row == 'a' || row == 'b' || row == 'c')
+                {
+                    selectRow = false;
+                }
+                else
+                {
+                    Console.WriteLine("Error:: row [" + row + "] is not valid! please true A, B, or C!");
+                }
+            } while (selectRow);
             Console.Write("How many pieces would you like to take from " + row + ":: ");
             pieces = Console.ReadLine();
             Int32.TryParse(pieces, out piecesToTake);
