@@ -54,6 +54,7 @@ namespace Nim
                     Console.WriteLine("ERROR:Coder error bad selection");
                     break;
             }
+            PlayAgain();
         }
         public void PlayAgain()
         {
