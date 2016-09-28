@@ -56,6 +56,7 @@ namespace Nim
                 case 4:
                     Console.WriteLine("Starting Computer vs Smart Computer");
                     game.Start(selection);
+                    showStats(game.p1Count, game.p2Count);
                     break;
                 default:
                     Console.WriteLine("ERROR:Coder error bad selection");
@@ -63,6 +64,14 @@ namespace Nim
             }
             PlayAgain();
         }
+
+        private void showStats(int p1, int p2)
+        {
+            Console.WriteLine("Player 1 (Random CPU) won " + p1 + " times.\n Player 2 (Smart CPU) won " + p2 + " times.");
+            Console.WriteLine("Stats - Player 1 won " + (double)((p1/repeat) * 100) + 
+                "% of the games.\nPlayer 2 won " + (double)((p2/repeat) * 100) + "% of the games.");
+        }
+
         public void PlayAgain()
         {
             bool valid = false;

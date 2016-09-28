@@ -21,6 +21,8 @@ namespace Nim.CpuVsCpu
         private bool isP1Turn = true;
         private bool learningCPUOn = false;
         private LearnCPU learningCPU;
+        public int p1Count { get; private set; }
+        public int p2Count { get; private set; }    
 
         /// <summary>
         /// Method that starts the CPU game
@@ -60,6 +62,7 @@ namespace Nim.CpuVsCpu
         }
         public void Start(int selection)
         {
+            
             SetGameMode(selection);
             Console.WriteLine(PrintBoard());
             bool gameOver = false;
@@ -69,7 +72,7 @@ namespace Nim.CpuVsCpu
                 MakeMoves();
                 gameOver = CheckGameOver();
                 Console.WriteLine(PrintBoard());
-                System.Threading.Thread.Sleep(500);
+                System.Threading.Thread.Sleep(0);
             }
             while (!gameOver);
 
@@ -83,10 +86,12 @@ namespace Nim.CpuVsCpu
             if (p1IsWinner)
             {
                 Console.WriteLine("Player 1 is the winner");
+                p1Count++;
             }
             else
             {
                 Console.WriteLine("Player 2 is the winner");
+                p2Count++;
             }
 
             visual = new char[3][]
