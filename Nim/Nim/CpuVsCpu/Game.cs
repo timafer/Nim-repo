@@ -170,9 +170,9 @@ namespace Nim.CpuVsCpu
             }
         }
 
-        public char[][] CopyArrayLinq(char[][] source)
+        public char[][] CopyArray(char[][] array)
         {
-            return source.Select(s => s.ToArray()).ToArray();
+            return array.Select(s => s.ToArray()).ToArray();
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Nim.CpuVsCpu
 
                 if (learningCPUOn)
                 {
-                    char[][] arrayCopy = CopyArrayLinq(visual);
+                    char[][] arrayCopy = CopyArray(visual);
                     previousStates.Add(new State(move, 0, arrayCopy));
                 }
 
@@ -272,7 +272,7 @@ namespace Nim.CpuVsCpu
 
                 if (learningCPUOn)
                 {
-                    char[][] arrayCopy = CopyArrayLinq(visual);
+                    char[][] arrayCopy = CopyArray(visual);
                     previousStates.Add(new State(move, 0, arrayCopy));
                 }
 
