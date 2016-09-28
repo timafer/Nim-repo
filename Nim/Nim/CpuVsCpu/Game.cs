@@ -74,6 +74,7 @@ namespace Nim.CpuVsCpu
             bool gameOver = false;
             do
             {
+                Console.Clear();
                 MakeMoves();
                 gameOver = CheckGameOver();
                 Console.WriteLine(PrintBoard());
