@@ -58,6 +58,11 @@ namespace Nim.CpuVsCpu
                     player2 = learningCPU;
                     learningCPUOn = true;
                     break;
+                case 5:
+                    player1 = new UserPlayer();
+                    player2 = learningCPU;
+                    learningCPUOn = true;
+                    break;
             }
         }
         public void Start(int selection)
