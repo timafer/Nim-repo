@@ -28,14 +28,14 @@ namespace Nim
                 bool b = int.TryParse(s, out i);
                 if (!b || i < 1 || i > 5)
                 {
-                    Console.WriteLine("ERROR:Invalid input. Please Enter A Number Between 1 and 4");
+                    Console.WriteLine("ERROR:Invalid input. Please Enter A Number Between 1 and 5");
                 }
                 else
                 {
                     goodinput = true;
                 }
             }
-            
+
             UseSelection(i);
 
         }
@@ -111,25 +111,25 @@ namespace Nim
                     Console.WriteLine("Invalid input");
                 }
             }
-                bool svalid = false;
-                while (!svalid)
+            bool svalid = false;
+            while (!svalid)
+            {
+                Console.WriteLine("Do you want to make a diffrent selection y/n");
+                string s2 = Console.ReadLine();
+                if (char.ToLower(s2[0]) == 'y')
                 {
-                    Console.WriteLine("Do you want to make a diffrent selection y/n");
-                    string s2 = Console.ReadLine();
-                    if (char.ToLower(s2[0]) == 'y')
-                    {
-                        Select();
-                        svalid = true;
-                    }
-                    else if (char.ToLower(s2[0]) == 'n')
-                    {
-                        svalid = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid input");
-                    }
+                    Select();
+                    svalid = true;
                 }
+                else if (char.ToLower(s2[0]) == 'n')
+                {
+                    svalid = true;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input");
+                }
+            }
         }
     }
 }

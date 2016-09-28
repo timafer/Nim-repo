@@ -56,6 +56,7 @@ namespace Nim.CpuVsCpu
                     player2 = learningCPU;
                     learningCPUOn = true;
                     break;
+
             }
         }
         public void Start(int selection)
