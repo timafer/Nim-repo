@@ -65,7 +65,7 @@ namespace Nim.CpuVsCpu
                     break;
             }
         }
-        public void Start(int selection)
+        public void Start(int selection, int sleepCounter)
         {
 
             SetGameMode(selection);
@@ -73,11 +73,10 @@ namespace Nim.CpuVsCpu
             bool gameOver = false;
             do
             {
-                Console.Clear();
                 MakeMoves();
                 gameOver = CheckGameOver();
                 Console.WriteLine(PrintBoard());
-                System.Threading.Thread.Sleep(500);
+                System.Threading.Thread.Sleep(sleepCounter);
             }
             while (!gameOver);
 

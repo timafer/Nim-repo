@@ -19,24 +19,36 @@ namespace Nim.CpuVsCpu
 
         public void AddMove(State state)
         {
-            foreach (State s in learnedMoves)
+            if (learnedMoves.Count() > 0)
             {
-                if (s.StateOfBoard == state.StateOfBoard)
+                bool hasLearned = false;
+                State temp = null;
+                for (int i = 0; i < learnedMoves.Count(); i++)
                 {
-                    if (s.MoveMade == state.MoveMade)
+                    if (learnedMoves[i].StateOfBoard == state.StateOfBoard)
                     {
-                        s.ValueOfWorth += state.ValueOfWorth;
+                        if (learnedMoves[i].MoveMade == state.MoveMade)
+                        {
+                            hasLearned = true;
+                            temp = learnedMoves[i];
+                        }
                     }
-                    else
-                    {
-                        learnedMoves.Add(state);
-                    }
+                }
+
+                if (hasLearned)
+                {
+                    temp.ValueOfWorth += state.ValueOfWorth;
                 }
                 else
                 {
                     learnedMoves.Add(state);
                 }
             }
+            else
+            {
+                learnedMoves.Add(state);
+            }
+
         }
 
         /// <summary>
@@ -58,7 +70,7 @@ namespace Nim.CpuVsCpu
             }
         }
 
-        public List<State> CheckForBoardInstance(char[][] board)
+        public List<State> CheckForBoardInstance()
         {
             List<State> possibleStates = new List<State>();
 
@@ -69,7 +81,7 @@ namespace Nim.CpuVsCpu
 
                 for (int i = 0; i < temp.Count(); i++)
                 {
-                    for (int k = 0; k < temp[i].Count(); i++)
+                    for (int k = 0; k < temp[i].Count(); k++)
                     {
                         if (board[i][k] != temp[i][k])
                         {
@@ -91,9 +103,9 @@ namespace Nim.CpuVsCpu
         {
             int[] move = new int[2];
 
-            List<State> possibleMoves = CheckForBoardInstance(board);
+            List<State> possibleMoves = CheckForBoardInstance();
             double currentMoveWorth = 0;
-            if (possibleMoves.Any())
+            if (possibleMoves.Count() > 0)
             {
                 foreach (State s in possibleMoves)
                 {
@@ -101,6 +113,7 @@ namespace Nim.CpuVsCpu
                     {
                         move = s.MoveMade;
                         currentMoveWorth = s.ValueOfWorth;
+                        Console.WriteLine(move[0] + ", " + move[1]);
                     }
                 }
             }

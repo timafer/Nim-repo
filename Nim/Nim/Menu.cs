@@ -59,31 +59,36 @@ namespace Nim
                     }
                 }
             }
+
+
+            int sleepCounter = 500;
+
             switch (selection)
             {
                 case 1:
                     Console.WriteLine("Starting Player vs Player");
-                    game.Start(selection);
+                    game.Start(selection, sleepCounter);
                     break;
                 case 2:
                     Console.WriteLine("Starting Player vs Computer");
-                    game.Start(selection);
+                    game.Start(selection, sleepCounter);
                     break;
                 case 3:
                     Console.WriteLine("Starting Computer vs Computer");
-                    game.Start(selection);
+                    game.Start(selection, sleepCounter);
                     break;
                 case 4:
+                    sleepCounter = 0;
                     Console.WriteLine("Starting Computer vs Smart Computer");
                     for (int i = 0; i < repeat; i++)
                     {
-                        game.Start(selection);
+                        game.Start(selection, sleepCounter);
                     }
                     showStats(game.p1Count, game.p2Count);
                     break;
                 case 5:
                     Console.WriteLine("Player vs Smart Computer");
-                    game.Start(selection);
+                    game.Start(selection, sleepCounter);
                     break;
                 default:
                     Console.WriteLine("ERROR:Coder error bad selection");
@@ -91,12 +96,14 @@ namespace Nim
             }
             PlayAgain(selection);
         }
+
         private void showStats(int p1, int p2)
         {
             Console.WriteLine("Player 1 (Random CPU) won " + p1 + " times.\n Player 2 (Smart CPU) won " + p2 + " times.");
-            Console.WriteLine("Stats: \n\nPlayer 1 won " + ((p1 / (double)(p1+ p2)) * 100) +
-                "% of the games.\nPlayer 2 won " + ((p2 / (double)(p1+ p2)) * 100) + "% of the games.");
+            Console.WriteLine("Stats: \n\nPlayer 1 won " + ((p1 / (double)(p1 + p2)) * 100) +
+                "% of the games.\nPlayer 2 won " + ((p2 / (double)(p1 + p2)) * 100) + "% of the games.");
         }
+
         public void PlayAgain(int selection)
         {
             bool valid = false;
