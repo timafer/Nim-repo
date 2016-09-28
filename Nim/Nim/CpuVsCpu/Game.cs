@@ -17,7 +17,7 @@ namespace Nim.CpuVsCpu
         };
         private Player player1;
         private Player player2;
-        private List<State> previousStates = new List<State>();
+        private List<State> previousStates;
         private bool isP1Turn = true;
         private bool learningCPUOn = false;
         private LearnCPU learningCPU;
@@ -68,6 +68,7 @@ namespace Nim.CpuVsCpu
         public void Start(int selection, int sleepCounter)
         {
             isP1Turn = true;
+            previousStates = new List<State>();
             SetGameMode(selection);
             Console.WriteLine(PrintBoard());
             bool gameOver = false;
@@ -271,7 +272,6 @@ namespace Nim.CpuVsCpu
                     }
 
                     move = player2.ChooseMove();
-                    Console.WriteLine("In do while: " + move[0] + ", " + move[1]);
                     isVaildMove = CheckRow(move[0], move[1]);
 
                 }

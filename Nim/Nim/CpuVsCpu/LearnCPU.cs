@@ -106,7 +106,7 @@ namespace Nim.CpuVsCpu
 
         public override int[] ChooseMove()
         {
-            int[] move = new int[2];
+            int[] move = null;
 
             List<State> possibleMoves = CheckForBoardInstance();
             if (possibleMoves.Count() > 0)
@@ -118,9 +118,13 @@ namespace Nim.CpuVsCpu
                     {
                         move = s.MoveMade;
                         currentMoveWorth = s.ValueOfWorth;
-                        Console.WriteLine("Learned move: " + move[0] + ", " + move[1]);
+                    }
+                    else
+                    {
+                        move = s.MoveMade;
                     }
                 }
+
             }
             else
             {
@@ -146,10 +150,7 @@ namespace Nim.CpuVsCpu
                 }
                 move = new int[] { rowChoice, removeAmount };
 
-                Console.WriteLine("Random: " + move[0] + ", " + move[1]);
             }
-
-            Console.WriteLine("Return: " + move[0] + ", " + move[1]);
 
             return move;
         }
