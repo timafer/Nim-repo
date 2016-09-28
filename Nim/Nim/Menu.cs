@@ -9,7 +9,13 @@ namespace Nim
 {
     public class Menu
     {
-        private Game game = new Game();
+        private Game game;
+
+        public Menu(Game game)
+        {
+            this.game = game;
+        }
+
         public void Select()
         {
             int i = 0;

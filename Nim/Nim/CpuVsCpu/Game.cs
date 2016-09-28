@@ -88,6 +88,13 @@ namespace Nim.CpuVsCpu
             {
                 Console.WriteLine("Player 2 is the winner");
             }
+
+            visual = new char[3][]
+            {
+            new char[] {'o', 'o', 'o'},
+            new char[] {'o', 'o', 'o', 'o', 'o'},
+            new char[] {'o', 'o', 'o', 'o', 'o', 'o', 'o'}
+            };
         }
 
         /// <summary>
