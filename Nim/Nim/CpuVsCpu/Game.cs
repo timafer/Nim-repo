@@ -271,8 +271,9 @@ namespace Nim.CpuVsCpu
                     }
 
                     move = player2.ChooseMove();
-
+                    Console.WriteLine("In do while: " + move[0] + ", " + move[1]);
                     isVaildMove = CheckRow(move[0], move[1]);
+
                 }
                 while (!isVaildMove);
 

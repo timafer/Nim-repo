@@ -109,16 +109,16 @@ namespace Nim.CpuVsCpu
             int[] move = new int[2];
 
             List<State> possibleMoves = CheckForBoardInstance();
-            double currentMoveWorth = 0;
             if (possibleMoves.Count() > 0)
             {
+                double currentMoveWorth = possibleMoves[0].ValueOfWorth;
                 foreach (State s in possibleMoves)
                 {
-                    if (currentMoveWorth < s.ValueOfWorth && s.ValueOfWorth > 0)
+                    if (s.ValueOfWorth > currentMoveWorth)
                     {
                         move = s.MoveMade;
                         currentMoveWorth = s.ValueOfWorth;
-                        Console.WriteLine(move[0] + ", " + move[1]);
+                        Console.WriteLine("Learned move: " + move[0] + ", " + move[1]);
                     }
                 }
             }
@@ -144,9 +144,13 @@ namespace Nim.CpuVsCpu
                         Console.WriteLine("PROGRAMMER ERROR: Invalid rowChoice made");
                         break;
                 }
-
                 move = new int[] { rowChoice, removeAmount };
+
+                Console.WriteLine("Random: " + move[0] + ", " + move[1]);
             }
+
+            Console.WriteLine("Return: " + move[0] + ", " + move[1]);
+
             return move;
         }
     }
