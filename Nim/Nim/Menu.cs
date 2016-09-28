@@ -26,7 +26,7 @@ namespace Nim
                 Console.WriteLine("Please Select Game mode \n 1:P v P \n 2:P v Cpu \n 3:Cpu v Cpu \n 4:Cpu v Smart Cpu \n 5:P v Smart Cpu");
                 string s = Console.ReadLine();
                 bool b = int.TryParse(s, out i);
-                if (!b || i < 1 || i > 5)
+                if (!b || i < 1 || i > 6)
                 {
                     Console.WriteLine("ERROR:Invalid input. Please Enter A Number Between 1 and 5");
                 }
@@ -79,6 +79,7 @@ namespace Nim
                     {
                         game.Start(selection);
                     }
+                    showStats(game.p1Count, game.p2Count);
                     break;
                 case 5:
                     Console.WriteLine("Player vs Smart Computer");
@@ -89,6 +90,12 @@ namespace Nim
                     break;
             }
             PlayAgain(selection);
+        }
+        private void showStats(int p1, int p2)
+        {
+            Console.WriteLine("Player 1 (Random CPU) won " + p1 + " times.\n Player 2 (Smart CPU) won " + p2 + " times.");
+            Console.WriteLine("Stats: \n\nPlayer 1 won " + ((p1 / (double)(p1+ p2)) * 100) +
+                "% of the games.\nPlayer 2 won " + ((p2 / (double)(p1+ p2)) * 100) + "% of the games.");
         }
         public void PlayAgain(int selection)
         {
