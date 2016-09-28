@@ -10,6 +10,7 @@ namespace Nim
     public class Menu
     {
         private Game game;
+        int repeat = 0;
 
         public Menu(Game game)
         {
@@ -22,10 +23,10 @@ namespace Nim
             bool goodinput = false;
             while (!goodinput)
             {
-                Console.WriteLine("Please Select Game mode \n 1:P v P \n 2:P v Cpu \n 3:Cpu v Cpu \n 4:Cpu v Smart Cpu");
+                Console.WriteLine("Please Select Game mode \n 1:P v P \n 2:P v Cpu \n 3:Cpu v Cpu \n 4:Cpu v Smart Cpu \n 5:P v Smart Cpu");
                 string s = Console.ReadLine();
                 bool b = int.TryParse(s, out i);
-                if (!b || i < 1 || i > 4)
+                if (!b || i < 1 || i > 5)
                 {
                     Console.WriteLine("ERROR:Invalid input. Please Enter A Number Between 1 and 4");
                 }
@@ -34,11 +35,30 @@ namespace Nim
                     goodinput = true;
                 }
             }
+            
             UseSelection(i);
 
         }
         public void UseSelection(int selection)
         {
+            if (selection == 4)
+            {
+                bool goodinput = false;
+                while (!goodinput)
+                {
+                    Console.WriteLine("How many games do you want to play:");
+                    string s = Console.ReadLine();
+                    bool b = int.TryParse(s, out repeat);
+                    if (!b || repeat < 1)
+                    {
+                        Console.WriteLine("ERROR:Invalid input. Please Enter A Number Above 0");
+                    }
+                    else
+                    {
+                        goodinput = true;
+                    }
+                }
+            }
             switch (selection)
             {
                 case 1:
@@ -55,33 +75,31 @@ namespace Nim
                     break;
                 case 4:
                     Console.WriteLine("Starting Computer vs Smart Computer");
+                    for (int i = 0; i < repeat; i++)
+                    {
+                        game.Start(selection);
+                    }
+                    break;
+                case 5:
+                    Console.WriteLine("Player vs Smart Computer");
                     game.Start(selection);
-                    showStats(game.p1Count, game.p2Count);
                     break;
                 default:
                     Console.WriteLine("ERROR:Coder error bad selection");
                     break;
             }
-            PlayAgain();
+            PlayAgain(selection);
         }
-
-        private void showStats(int p1, int p2)
-        {
-            Console.WriteLine("Player 1 (Random CPU) won " + p1 + " times.\n Player 2 (Smart CPU) won " + p2 + " times.");
-            Console.WriteLine("Stats - Player 1 won " + (double)((p1/repeat) * 100) + 
-                "% of the games.\nPlayer 2 won " + (double)((p2/repeat) * 100) + "% of the games.");
-        }
-
-        public void PlayAgain()
+        public void PlayAgain(int selection)
         {
             bool valid = false;
             while (!valid)
             {
-                Console.WriteLine("Do you want to make a diffrent selection y/n");
+                Console.WriteLine("Do you want to play again y/n");
                 string s = Console.ReadLine();
                 if (char.ToLower(s[0]) == 'y')
                 {
-                    Select();
+                    UseSelection(selection);
                     valid = true;
                 }
                 else if (char.ToLower(s[0]) == 'n')
@@ -93,6 +111,25 @@ namespace Nim
                     Console.WriteLine("Invalid input");
                 }
             }
+                bool svalid = false;
+                while (!svalid)
+                {
+                    Console.WriteLine("Do you want to make a diffrent selection y/n");
+                    string s2 = Console.ReadLine();
+                    if (char.ToLower(s2[0]) == 'y')
+                    {
+                        Select();
+                        svalid = true;
+                    }
+                    else if (char.ToLower(s2[0]) == 'n')
+                    {
+                        svalid = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input");
+                    }
+                }
         }
     }
 }
