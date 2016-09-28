@@ -26,9 +26,9 @@ namespace Nim
                 Console.WriteLine("Please Select Game mode \n 1:P v P \n 2:P v Cpu \n 3:Cpu v Cpu \n 4:Cpu v Smart Cpu \n 5:P v Smart Cpu");
                 string s = Console.ReadLine();
                 bool b = int.TryParse(s, out i);
-                if (!b || i < 1 || i > 5)
+                if (!b || i < 1 || i > 6)
                 {
-                    Console.WriteLine("ERROR:Invalid input. Please Enter A Number Between 1 and 4");
+                    Console.WriteLine("ERROR:Invalid input. Please Enter A Number Between 1 and 5");
                 }
                 else
                 {
