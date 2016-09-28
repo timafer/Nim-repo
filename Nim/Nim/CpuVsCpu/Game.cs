@@ -19,11 +19,18 @@ namespace Nim.CpuVsCpu
         private Player player2;
         private List<State> previousStates = new List<State>();
         private bool isP1Turn = true;
+        private bool learningCPUOn = false;
+        private LearnCPU learningCPU;
 
         /// <summary>
         /// Method that starts the CPU game
         /// </summary>
         /// 
+
+        public Game()
+        {
+            learningCPU = new LearnCPU(visual);
+        }
 
         private void SetGameMode(int s)
         {
@@ -32,25 +39,28 @@ namespace Nim.CpuVsCpu
                 case 1:
                     player1 = new UserPlayer();
                     player2 = new UserPlayer();
+                    learningCPUOn = false;
                     break;
                 case 2:
                     player1 = new UserPlayer();
                     player2 = new RandCpu();
+                    learningCPUOn = false;
                     break;
                 case 3:
                     player1 = new RandCpu();
                     player2 = new RandCpu();
+                    learningCPUOn = false;
                     break;
                 case 4:
                     player1 = new RandCpu();
-                    player2 = new LearnCPU(visual);
+                    player2 = learningCPU;
+                    learningCPUOn = true;
                     break;
             }
         }
         public void Start(int selection)
         {
             SetGameMode(selection);
-            Console.WriteLine("This is start");
             Console.WriteLine(PrintBoard());
             bool gameOver = false;
             do
@@ -65,7 +75,10 @@ namespace Nim.CpuVsCpu
 
             bool p1IsWinner = isP1Turn;
 
-            RateMoves();
+            if (learningCPUOn)
+            {
+                RateMoves();
+            }
 
             if (p1IsWinner)
             {
@@ -141,7 +154,7 @@ namespace Nim.CpuVsCpu
 
             foreach (State temp in previousStates)
             {
-                learnP2.AddMove(temp);
+                ((LearnCPU)player2).AddMove(temp);
             }
         }
 
@@ -200,8 +213,11 @@ namespace Nim.CpuVsCpu
                 }
                 while (!isVaildMove);
 
-                char[][] copyArray = CopyArrayLinq(visual);
-                previousStates.Add(new State(move, 0, copyArray));
+                if (learningCPUOn)
+                {
+                    char[][] arrayCopy = CopyArrayLinq(visual);
+                    previousStates.Add(new State(move, 0, arrayCopy));
+                }
 
                 int numRemoved = 0;
                 int position = 0;
@@ -242,8 +258,11 @@ namespace Nim.CpuVsCpu
                 }
                 while (!isVaildMove);
 
-                char[][] copyArray = CopyArrayLinq(visual);
-                previousStates.Add(new State(move, 0, copyArray));
+                if (learningCPUOn)
+                {
+                    char[][] arrayCopy = CopyArrayLinq(visual);
+                    previousStates.Add(new State(move, 0, arrayCopy));
+                }
 
                 int numRemoved = 0;
                 int position = 0;

@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Nim
 {
-    class Menu
+    public class Menu
     {
+        private Game game = new Game();
         public void Select()
         {
             int i = 0;
@@ -32,7 +33,6 @@ namespace Nim
         }
         public void UseSelection(int selection)
         {
-            Game game = new Game();
             switch (selection)
             {
                 case 1:
