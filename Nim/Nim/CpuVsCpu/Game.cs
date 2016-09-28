@@ -67,7 +67,7 @@ namespace Nim.CpuVsCpu
         }
         public void Start(int selection, int sleepCounter)
         {
-
+            isP1Turn = true;
             SetGameMode(selection);
             Console.WriteLine(PrintBoard());
             bool gameOver = false;
@@ -104,6 +104,8 @@ namespace Nim.CpuVsCpu
             new char[] {'o', 'o', 'o', 'o', 'o'},
             new char[] {'o', 'o', 'o', 'o', 'o', 'o', 'o'}
             };
+
+            learningCPU.ResetBoard(visual);
         }
 
         /// <summary>

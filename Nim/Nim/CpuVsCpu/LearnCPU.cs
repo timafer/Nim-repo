@@ -17,6 +17,11 @@ namespace Nim.CpuVsCpu
             board = visual;
         }
 
+        public void ResetBoard(char[][] visual)
+        {
+            board = visual;
+        }
+
         public void AddMove(State state)
         {
             if (learnedMoves.Count() > 0)
