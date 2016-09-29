@@ -114,45 +114,62 @@ namespace Nim.CpuVsCpu
                 double currentMoveWorth = possibleMoves[0].ValueOfWorth;
                 foreach (State s in possibleMoves)
                 {
-                    if (s.ValueOfWorth > currentMoveWorth)
+                    if (s.ValueOfWorth > 0)
                     {
-                        move = s.MoveMade;
-                        currentMoveWorth = s.ValueOfWorth;
+                        if (s.ValueOfWorth > currentMoveWorth)
+                        {
+                            move = s.MoveMade;
+                            currentMoveWorth = s.ValueOfWorth;
+                        }
+                        else
+                        {
+                            move = s.MoveMade;
+                        }
                     }
                     else
                     {
-                        move = s.MoveMade;
+                        move = CreateRandomMove();
                     }
+
                 }
 
             }
             else
             {
-                Random randomGen = new Random();
-
-                int rowChoice = randomGen.Next(0, 3);
-                int removeAmount = 0;
-
-                switch (rowChoice)
-                {
-                    case 0:
-                        removeAmount = randomGen.Next(1, 4);
-                        break;
-                    case 1:
-                        removeAmount = randomGen.Next(1, 6);
-                        break;
-                    case 2:
-                        removeAmount = randomGen.Next(1, 8);
-                        break;
-                    default:
-                        Console.WriteLine("PROGRAMMER ERROR: Invalid rowChoice made");
-                        break;
-                }
-                move = new int[] { rowChoice, removeAmount };
-
+                move = CreateRandomMove();
             }
 
             return move;
+        }
+
+        private int[] CreateRandomMove()
+        {
+            int[] move = null;
+
+            Random randomGen = new Random();
+
+            int rowChoice = randomGen.Next(0, 3);
+            int removeAmount = 0;
+
+            switch (rowChoice)
+            {
+                case 0:
+                    removeAmount = randomGen.Next(1, 4);
+                    break;
+                case 1:
+                    removeAmount = randomGen.Next(1, 6);
+                    break;
+                case 2:
+                    removeAmount = randomGen.Next(1, 8);
+                    break;
+                default:
+                    Console.WriteLine("PROGRAMMER ERROR: Invalid rowChoice made");
+                    break;
+            }
+            move = new int[] { rowChoice, removeAmount };
+
+            return move;
+
         }
     }
 }

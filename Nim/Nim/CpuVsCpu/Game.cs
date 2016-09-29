@@ -74,7 +74,10 @@ namespace Nim.CpuVsCpu
             bool gameOver = false;
             do
             {
-                Console.Clear();
+                if (player1.GetType() != typeof(UserPlayer))
+                {
+                    Console.Clear();
+                }
                 MakeMoves();
                 gameOver = CheckGameOver();
                 Console.WriteLine(PrintBoard());

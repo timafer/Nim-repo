@@ -62,7 +62,7 @@ namespace Nim
             }
 
 
-            int sleepCounter = 500;
+            int sleepCounter = 1000;
 
             switch (selection)
             {
