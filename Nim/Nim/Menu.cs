@@ -26,7 +26,7 @@ namespace Nim
                 Console.WriteLine("Please Select Game mode \n 1:P v P \n 2:P v Cpu \n 3:Cpu v Cpu \n 4:Cpu v Smart Cpu \n 5:P v Smart Cpu");
                 string s = Console.ReadLine();
                 bool b = int.TryParse(s, out i);
-                if (!b || i < 1 || i > 6)
+                if (!b || i < 1 || i > 5)
                 {
                     Console.WriteLine("ERROR:Invalid input. Please Enter A Number Between 1 and 5");
                 }
@@ -51,6 +51,7 @@ namespace Nim
                     bool b = int.TryParse(s, out repeat);
                     if (!b || repeat < 1)
                     {
+                        Console.Clear();
                         Console.WriteLine("ERROR:Invalid input. Please Enter A Number Above 0");
                     }
                     else
@@ -107,6 +108,7 @@ namespace Nim
         public void PlayAgain(int selection)
         {
             bool valid = false;
+            bool svalid = false;
             while (!valid)
             {
                 Console.WriteLine("Do you want to play again y/n");
@@ -115,6 +117,8 @@ namespace Nim
                 {
                     UseSelection(selection);
                     valid = true;
+                    svalid = true;
+                    
                 }
                 else if (char.ToLower(s[0]) == 'n')
                 {
@@ -122,27 +126,29 @@ namespace Nim
                 }
                 else
                 {
+                    Console.Clear();
                     Console.WriteLine("Invalid input");
                 }
             }
-            bool svalid = false;
             while (!svalid)
             {
                 Console.WriteLine("Do you want to make a diffrent selection y/n");
                 string s2 = Console.ReadLine();
                 if (char.ToLower(s2[0]) == 'y')
                 {
+                    Console.Clear();
                     Select();
                     svalid = true;
                 }
                 else if (char.ToLower(s2[0]) == 'n')
                 {
-                    svalid = true;
+                     svalid = true;
                 }
                 else
                 {
                     Console.WriteLine("Invalid input");
                 }
+                Console.WriteLine("Exit");
             }
         }
     }
