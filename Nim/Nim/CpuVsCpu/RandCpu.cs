@@ -9,7 +9,11 @@ namespace Nim.CpuVsCpu
 {
     public class RandCpu: Player
     {
-        
+
+        public RandCpu(char[][] visual) : base(visual)
+        {
+        }
+
         public override int[] ChooseMove()
         {
             int[] move = new int[2];
@@ -22,13 +26,13 @@ namespace Nim.CpuVsCpu
             switch (rowChoice)
             {
                 case 0:
-                    removeAmount = randomGen.Next(1, 4);
+                    removeAmount = randomGen.Next(1, aBound);
                     break;
                 case 1:
-                    removeAmount = randomGen.Next(1, 6);
+                    removeAmount = randomGen.Next(1, bBound);
                     break;
                 case 2:
-                    removeAmount = randomGen.Next(1, 8);
+                    removeAmount = randomGen.Next(1, cBound);
                     break;
                 default:
                     Console.WriteLine("PROGRAMMER ERROR: Invalid rowChoice made");

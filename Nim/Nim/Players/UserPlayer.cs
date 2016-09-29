@@ -9,6 +9,10 @@ namespace Nim.Players
     public class UserPlayer: Player
     {
 
+        public UserPlayer(char[][] visual) : base(visual)
+        {
+        }
+
         private int RowCharToInt(char r)//Changes between A,B,C to 0,1,2
         {
             int row = -1;

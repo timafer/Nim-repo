@@ -10,16 +10,10 @@ namespace Nim.CpuVsCpu
     public class LearnCPU : Player
     {
         public List<State> learnedMoves { get; private set; } = new List<State>();
-        private char[][] board;
 
-        public LearnCPU(char[][] visual)
-        {
-            board = visual;
-        }
 
-        public void ResetBoard(char[][] visual)
+        public LearnCPU(char[][] visual) : base(visual)
         {
-            board = visual;
         }
 
         public void AddMove(State state)
@@ -154,13 +148,13 @@ namespace Nim.CpuVsCpu
             switch (rowChoice)
             {
                 case 0:
-                    removeAmount = randomGen.Next(1, 4);
+                    removeAmount = randomGen.Next(1, aBound);
                     break;
                 case 1:
-                    removeAmount = randomGen.Next(1, 6);
+                    removeAmount = randomGen.Next(1, bBound);
                     break;
                 case 2:
-                    removeAmount = randomGen.Next(1, 8);
+                    removeAmount = randomGen.Next(1, cBound);
                     break;
                 default:
                     Console.WriteLine("PROGRAMMER ERROR: Invalid rowChoice made");

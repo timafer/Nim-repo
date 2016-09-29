@@ -39,27 +39,27 @@ namespace Nim.CpuVsCpu
             switch (s)
             {
                 case 1:
-                    player1 = new UserPlayer();
-                    player2 = new UserPlayer();
+                    player1 = new UserPlayer(null);
+                    player2 = new UserPlayer(null);
                     learningCPUOn = false;
                     break;
                 case 2:
-                    player1 = new UserPlayer();
-                    player2 = new RandCpu();
+                    player1 = new UserPlayer(null);
+                    player2 = new RandCpu(visual);
                     learningCPUOn = false;
                     break;
                 case 3:
-                    player1 = new RandCpu();
-                    player2 = new RandCpu();
+                    player1 = new RandCpu(visual);
+                    player2 = new RandCpu(visual);
                     learningCPUOn = false;
                     break;
                 case 4:
-                    player1 = new RandCpu();
+                    player1 = new RandCpu(visual);
                     player2 = learningCPU;
                     learningCPUOn = true;
                     break;
                 case 5:
-                    player1 = new UserPlayer();
+                    player1 = new UserPlayer(null);
                     player2 = learningCPU;
                     learningCPUOn = true;
                     break;
@@ -79,6 +79,8 @@ namespace Nim.CpuVsCpu
                     Console.Clear();
                 }
                 MakeMoves();
+                player1.setRandomBounds();
+                player2.setRandomBounds();
                 gameOver = CheckGameOver();
                 Console.WriteLine(PrintBoard());
                 System.Threading.Thread.Sleep(sleepCounter);
@@ -110,7 +112,10 @@ namespace Nim.CpuVsCpu
             new char[] {'o', 'o', 'o', 'o', 'o', 'o', 'o'}
             };
 
-            learningCPU.ResetBoard(visual);
+            player1.ResetBoard(visual);
+            player2.ResetBoard(visual);
+            player1.resetBounds();
+            player2.resetBounds();
         }
 
         /// <summary>
@@ -360,9 +365,5 @@ namespace Nim.CpuVsCpu
             p2Count = 0;
         }
 
-        public void setRandomBounds()
-        {
-
-        }
     }
 }
