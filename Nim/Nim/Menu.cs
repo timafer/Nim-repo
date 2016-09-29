@@ -90,6 +90,7 @@ namespace Nim
                     break;
                 case 5:
                     Console.WriteLine("Player vs Smart Computer");
+                    game.Start(selection, sleepCounter);
                     break;
                 default:
                     Console.WriteLine("ERROR:Coder error bad selection");
