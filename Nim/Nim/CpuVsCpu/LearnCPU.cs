@@ -50,25 +50,6 @@ namespace Nim.CpuVsCpu
 
         }
 
-        /// <summary>
-        /// Sorts the learned moves by value
-        /// </summary>
-        public void SortMovesByValue()
-        {
-            for (int i = learnedMoves.Count() - 1; i > 0; i--)
-            {
-                for (int k = 1; k < i; k++)
-                {
-                    if (learnedMoves[k - 1].ValueOfWorth < learnedMoves[k].ValueOfWorth)
-                    {
-                        State temp = learnedMoves[k - 1];
-                        learnedMoves[k - 1] = learnedMoves[i];
-                        learnedMoves[i] = temp;
-                    }
-                }
-            }
-        }
-
         public List<State> CheckForBoardInstance()
         {
             List<State> possibleStates = new List<State>();
