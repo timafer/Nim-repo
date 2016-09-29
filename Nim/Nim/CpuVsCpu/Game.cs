@@ -203,12 +203,16 @@ namespace Nim.CpuVsCpu
                 }
             }
 
-            if (counter >= removeAmount)
+            if (counter >= removeAmount && removeAmount >= 1)
             {
                 return true;
             }
             else
             {
+                if((isP1Turn && typeof(UserPlayer) == player1.GetType()) || (!isP1Turn && typeof(UserPlayer) == player2.GetType()))
+                {
+                    Console.WriteLine("Error: removeAmount: [" + removeAmount + "] is greater than row [" + RowIntToChar(row) + "] remaining pieces [" + counter + "].");
+                }
                 return false;
             }
 

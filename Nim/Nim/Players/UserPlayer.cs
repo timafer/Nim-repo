@@ -57,9 +57,17 @@ namespace Nim.Players
                     Console.WriteLine("Error:: row [" + row + "] is not valid! please true A, B, or C!");
                 }
             } while (selectRow);
-            Console.Write("How many pieces would you like to take from " + row + ":: ");
-            pieces = Console.ReadLine();
-            Int32.TryParse(pieces, out piecesToTake);
+            bool passed = false;
+            do
+            {
+                Console.Write("How many pieces would you like to take from " + row + ":: ");
+                pieces = Console.ReadLine();
+                passed = Int32.TryParse(pieces, out piecesToTake) && (piecesToTake > 0 && piecesToTake < 8);
+                if(!passed)
+                {
+                    Console.WriteLine("Error: [" + pieces + "] is not valid input please put in a number includeing 1 through 7!");
+                }
+            } while (!passed);
             rowInt = RowCharToInt(row);
             move[0] = rowInt;
             move[1] = piecesToTake;
