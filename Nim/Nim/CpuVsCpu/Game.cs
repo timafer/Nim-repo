@@ -39,12 +39,12 @@ namespace Nim.CpuVsCpu
             switch (s)
             {
                 case 1:
-                    player1 = new UserPlayer(null);
-                    player2 = new UserPlayer(null);
+                    player1 = new UserPlayer(visual);
+                    player2 = new UserPlayer(visual);
                     learningCPUOn = false;
                     break;
                 case 2:
-                    player1 = new UserPlayer(null);
+                    player1 = new UserPlayer(visual);
                     player2 = new RandCpu(visual);
                     learningCPUOn = false;
                     break;
@@ -59,7 +59,7 @@ namespace Nim.CpuVsCpu
                     learningCPUOn = true;
                     break;
                 case 5:
-                    player1 = new UserPlayer(null);
+                    player1 = new UserPlayer(visual);
                     player2 = learningCPU;
                     learningCPUOn = true;
                     break;
