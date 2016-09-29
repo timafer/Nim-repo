@@ -214,7 +214,7 @@ namespace Nim.CpuVsCpu
             }
             else
             {
-                if((isP1Turn && typeof(UserPlayer) == player1.GetType()) || (!isP1Turn && typeof(UserPlayer) == player2.GetType()))
+                if ((isP1Turn && typeof(UserPlayer) == player1.GetType()) || (!isP1Turn && typeof(UserPlayer) == player2.GetType()))
                 {
                     Console.WriteLine("Error: removeAmount: [" + removeAmount + "] is greater than row [" + RowIntToChar(row) + "] remaining pieces [" + counter + "].");
                 }
