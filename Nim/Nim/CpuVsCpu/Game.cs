@@ -350,5 +350,15 @@ namespace Nim.CpuVsCpu
             }
             return row;
         }
+        public void resetStats()
+        {
+            p1Count = 0;
+            p2Count = 0;
+        }
+
+        public void setRandomBounds()
+        {
+
+        }
     }
 }
