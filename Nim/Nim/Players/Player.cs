@@ -24,35 +24,8 @@ namespace Nim.Players
         {
             board = visual;
         }
-        public virtual int[] ChooseMove()
-        {
-            int[] move = new int[2];
+        public abstract int[] ChooseMove();
 
-            Random randomGen = new Random();
-
-            int rowChoice = randomGen.Next(0, 3);
-            int removeAmount = 0;
-
-            switch (rowChoice)
-            {
-                case 0:
-                    removeAmount = randomGen.Next(1, aBound);
-                    break;
-                case 1:
-                    removeAmount = randomGen.Next(1, bBound);
-                    break;
-                case 2:
-                    removeAmount = randomGen.Next(1, cBound);
-                    break;
-                default:
-                    Console.WriteLine("PROGRAMMER ERROR: Invalid rowChoice made");
-                    break;
-            }
-
-            move = new int[] { rowChoice, removeAmount };
-
-            return move;
-        }
         public void setRandomBounds()
         {
             for (int i = 0; i < board.Count(); i++)
