@@ -214,10 +214,6 @@ namespace Nim.CpuVsCpu
             }
             else
             {
-                if ((isP1Turn && typeof(UserPlayer) == player1.GetType()) || (!isP1Turn && typeof(UserPlayer) == player2.GetType()))
-                {
-                    Console.WriteLine("Error: removeAmount: [" + removeAmount + "] is greater than row [" + RowIntToChar(row) + "] remaining pieces [" + counter + "].");
-                }
                 return false;
             }
 
@@ -235,12 +231,7 @@ namespace Nim.CpuVsCpu
                 int[] move = null;
                 do
                 {
-                    if (player1.GetType() == typeof(UserPlayer))
-                    {
-                        Console.WriteLine(PrintBoard());
-                    }
                     move = player1.ChooseMove();
-
                     isVaildMove = CheckRow(move[0], move[1]);
                 }
                 while (!isVaildMove);
@@ -279,14 +270,8 @@ namespace Nim.CpuVsCpu
                 int[] move = null;
                 do
                 {
-                    if (player2.GetType() == typeof(UserPlayer))
-                    {
-                        Console.WriteLine(PrintBoard());
-                    }
-
                     move = player2.ChooseMove();
                     isVaildMove = CheckRow(move[0], move[1]);
-
                 }
                 while (!isVaildMove);
 
