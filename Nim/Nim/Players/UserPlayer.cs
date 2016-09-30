@@ -47,6 +47,7 @@ namespace Nim.Players
             int rowInt;
             int piecesToTake;
             string pieces;
+            int maxPieces = 0;
             bool selectRow = true;
             do
             {
@@ -62,17 +63,18 @@ namespace Nim.Players
                 }
             } while (selectRow);
             bool passed = false;
+            rowInt = RowCharToInt(row);
+            maxPieces = countRow(rowInt);
             do
             {
                 Console.Write("How many pieces would you like to take from " + row + ":: ");
                 pieces = Console.ReadLine();
-                passed = Int32.TryParse(pieces, out piecesToTake) && (piecesToTake > 0 && piecesToTake < 8);
+                passed = Int32.TryParse(pieces, out piecesToTake) && (piecesToTake > 0 && piecesToTake <= maxPieces);
                 if(!passed)
                 {
-                    Console.WriteLine("Error: [" + pieces + "] is not valid input please put in a number includeing 1 through 7!");
+                    Console.WriteLine("Error: [" + pieces + "] is not valid input please put in a number includeing 1 through "+ maxPieces + "!");
                 }
             } while (!passed);
-            rowInt = RowCharToInt(row);
             move[0] = rowInt;
             move[1] = piecesToTake;
             return move;

@@ -60,6 +60,19 @@ namespace Nim.Players
             }
         }
 
+        public int countRow(int row)
+        {
+            int total = 0;
+            foreach (char peg in board[row])
+            {
+                if (peg == 'o')
+                {
+                    total++;
+                }
+            }
+            return total;
+        }
+
         public void resetBounds()
         {
             aBound = 4;
