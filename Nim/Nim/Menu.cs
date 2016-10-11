@@ -41,6 +41,9 @@ namespace Nim
         }
         public void UseSelection(int selection)
         {
+
+            int sleepCounter = 1000;
+
             if (selection == 4)
             {
                 bool goodinput = false;
@@ -60,9 +63,6 @@ namespace Nim
                     }
                 }
             }
-
-
-            int sleepCounter = 1000;
 
             switch (selection)
             {
@@ -119,7 +119,7 @@ namespace Nim
                     UseSelection(selection);
                     valid = true;
                     svalid = true;
-                    
+
                 }
                 else if (char.ToLower(s[0]) == 'n')
                 {
@@ -143,7 +143,7 @@ namespace Nim
                 }
                 else if (char.ToLower(s2[0]) == 'n')
                 {
-                     svalid = true;
+                    svalid = true;
                 }
                 else
                 {

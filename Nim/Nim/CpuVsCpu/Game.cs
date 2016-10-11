@@ -17,10 +17,8 @@ namespace Nim.CpuVsCpu
         };
         private Player player1;
         private Player player2;
-        private List<State> previousStates;
-        private bool isP1Turn = true;
-        private bool learningCPUOn = false;
         private LearnCPU learningCPU;
+        private List<State> previousStates;
         public int p1Count { get; private set; }
         public int p2Count { get; private set; }
 
@@ -41,33 +39,29 @@ namespace Nim.CpuVsCpu
                 case 1:
                     player1 = new UserPlayer(visual);
                     player2 = new UserPlayer(visual);
-                    learningCPUOn = false;
                     break;
                 case 2:
                     player1 = new UserPlayer(visual);
                     player2 = new RandCpu(visual);
-                    learningCPUOn = false;
                     break;
                 case 3:
                     player1 = new RandCpu(visual);
                     player2 = new RandCpu(visual);
-                    learningCPUOn = false;
                     break;
                 case 4:
                     player1 = new RandCpu(visual);
                     player2 = learningCPU;
-                    learningCPUOn = true;
                     break;
                 case 5:
                     player1 = new UserPlayer(visual);
                     player2 = learningCPU;
-                    learningCPUOn = true;
                     break;
             }
         }
+
         public void Start(int selection, int sleepCounter)
         {
-            isP1Turn = true;
+            bool isP1Turn = true;
             previousStates = new List<State>();
             SetGameMode(selection);
             Console.WriteLine(PrintBoard());
@@ -78,7 +72,8 @@ namespace Nim.CpuVsCpu
                 {
                     Console.Clear();
                 }
-                MakeMoves();
+                MakeMoves(isP1Turn);
+                isP1Turn = !isP1Turn;
                 player1.setRandomBounds();
                 player2.setRandomBounds();
                 gameOver = CheckGameOver();
@@ -89,7 +84,7 @@ namespace Nim.CpuVsCpu
 
             bool p1IsWinner = isP1Turn;
 
-            if (learningCPUOn)
+            if (player2.GetType() == typeof(LearnCPU))
             {
                 RateMoves();
             }
@@ -219,91 +214,58 @@ namespace Nim.CpuVsCpu
 
         }
 
+        public void PlayerTakeTurn(string playerName, Player player)
+        {
+            Console.WriteLine(playerName + " Turn");
+            bool isVaildMove = false;
+            int[] move = null;
+            do
+            {
+                move = player.ChooseMove();
+                isVaildMove = CheckRow(move[0], move[1]);
+            }
+            while (!isVaildMove);
+
+            if (player2.GetType() == typeof(LearnCPU))
+            {
+                char[][] arrayCopy = CopyArray(visual);
+                previousStates.Add(new State(move, 0, arrayCopy));
+            }
+
+            int numRemoved = 0;
+            int position = 0;
+            int row = move[0];
+            int removeAmount = move[1];
+            while (numRemoved != removeAmount)
+            {
+                if (visual[row][position] == 'o')
+                {
+                    visual[row][position] = 'x';
+                    numRemoved++;
+                    position++;
+                }
+                else
+                {
+                    position++;
+                }
+            }
+
+            Console.WriteLine(playerName + " removed " + removeAmount + " from row " + RowIntToChar(row) + ".");
+        }
         /// <summary>
         /// Calls cpus to make their respective moves
         /// </summary>
-        public void MakeMoves()
+        public void MakeMoves(bool isP1Turn)
         {
             if (isP1Turn)
             {
-                Console.WriteLine("Player 1 Turn");
-                bool isVaildMove = false;
-                int[] move = null;
-                do
-                {
-                    move = player1.ChooseMove();
-                    isVaildMove = CheckRow(move[0], move[1]);
-                }
-                while (!isVaildMove);
-
-                if (learningCPUOn)
-                {
-                    char[][] arrayCopy = CopyArray(visual);
-                    previousStates.Add(new State(move, 0, arrayCopy));
-                }
-
-                int numRemoved = 0;
-                int position = 0;
-                int row = move[0];
-                int removeAmount = move[1];
-                while (numRemoved != removeAmount)
-                {
-                    if (visual[row][position] == 'o')
-                    {
-                        visual[row][position] = 'x';
-                        numRemoved++;
-                        position++;
-                    }
-                    else
-                    {
-                        position++;
-                    }
-                }
-
-                Console.WriteLine("Player 1 removed " + removeAmount + " from row " + RowIntToChar(row) + ".");
-
+                PlayerTakeTurn("Player 1", player1);
             }
             else
             {
-                Console.WriteLine("Player 2 Turn");
-                bool isVaildMove = false;
-                int[] move = null;
-                do
-                {
-                    move = player2.ChooseMove();
-                    isVaildMove = CheckRow(move[0], move[1]);
-                }
-                while (!isVaildMove);
-
-                if (learningCPUOn)
-                {
-                    char[][] arrayCopy = CopyArray(visual);
-                    previousStates.Add(new State(move, 0, arrayCopy));
-                }
-
-                int numRemoved = 0;
-                int position = 0;
-                int row = move[0];
-                int removeAmount = move[1];
-                do
-                {
-                    if (visual[row][position] == 'o')
-                    {
-                        visual[row][position] = 'x';
-                        numRemoved++;
-                        position++;
-                    }
-                    else
-                    {
-                        position++;
-                    }
-                }
-                while (numRemoved != removeAmount);
-
-                Console.WriteLine("Player 2 removed " + removeAmount + " from row " + RowIntToChar(row) + ".");
+                PlayerTakeTurn("Player 2", player2);
             }
 
-            isP1Turn = !isP1Turn;
         }
 
         /// <summary>

@@ -48,7 +48,6 @@
     <Compile Include="CpuVsCpu\RandCpu.cs" />
     <Compile Include="CpuVsCpu\State.cs" />
     <Compile Include="Menu.cs" />
-    <Compile Include="Nim.cs" />
     <Compile Include="Players\Player.cs" />
     <Compile Include="Start.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
