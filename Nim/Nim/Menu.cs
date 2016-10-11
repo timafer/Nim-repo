@@ -63,38 +63,15 @@ namespace Nim
                     }
                 }
             }
-
-            switch (selection)
+            game.Start(selection, sleepCounter);
+            if (selection == 4)
             {
-                case 1:
-                    Console.WriteLine("Starting Player vs Player");
+                game.resetStats();
+                for (int i = 0; i < repeat; i++)
+                {
                     game.Start(selection, sleepCounter);
-                    break;
-                case 2:
-                    Console.WriteLine("Starting Player vs Computer");
-                    game.Start(selection, sleepCounter);
-                    break;
-                case 3:
-                    Console.WriteLine("Starting Computer vs Computer");
-                    game.Start(selection, sleepCounter);
-                    break;
-                case 4:
-                    sleepCounter = 0;
-                    Console.WriteLine("Starting Computer vs Smart Computer");
-                    game.resetStats();
-                    for (int i = 0; i < repeat; i++)
-                    {
-                        game.Start(selection, sleepCounter);
-                    }
-                    showStats(game.p1Count, game.p2Count);
-                    break;
-                case 5:
-                    Console.WriteLine("Player vs Smart Computer");
-                    game.Start(selection, sleepCounter);
-                    break;
-                default:
-                    Console.WriteLine("ERROR:Coder error bad selection");
-                    break;
+                }
+                showStats(game.p1Count, game.p2Count);
             }
             PlayAgain(selection);
         }
@@ -109,7 +86,6 @@ namespace Nim
         public void PlayAgain(int selection)
         {
             bool valid = false;
-            bool svalid = false;
             while (!valid)
             {
                 Console.WriteLine("Do you want to play again y/n");
@@ -118,12 +94,12 @@ namespace Nim
                 {
                     UseSelection(selection);
                     valid = true;
-                    svalid = true;
 
                 }
                 else if (char.ToLower(s[0]) == 'n')
                 {
                     valid = true;
+                    DiffrentSelection();
                 }
                 else
                 {
@@ -131,6 +107,10 @@ namespace Nim
                     Console.WriteLine("Invalid input");
                 }
             }
+        }
+        public void DiffrentSelection()
+        {
+            bool svalid = false;
             while (!svalid)
             {
                 Console.WriteLine("Do you want to make a diffrent selection y/n");
@@ -153,4 +133,5 @@ namespace Nim
             }
         }
     }
+}
 }
