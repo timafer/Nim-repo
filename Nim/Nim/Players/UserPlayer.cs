@@ -9,7 +9,7 @@ namespace Nim.Players
     public class UserPlayer: Player
     {
 
-        public UserPlayer(char[][] visual) : base(visual)
+        public UserPlayer(int[] visual,string name) : base(visual,name)
         {
         }
 

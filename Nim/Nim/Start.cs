@@ -11,9 +11,8 @@ namespace Nim
     {
         public static void Main(string[] args)
         {
-            Game game = new Game();
-            Menu n = new Menu(game);
-            n.Select();
+            Menu n = new Menu();
+            n.Load();
         }
     }
 }

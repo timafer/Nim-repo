@@ -13,7 +13,7 @@ namespace Nim.CpuVsCpu
     public class State
     {
         public double ValueOfWorth { get; set; }
-        public char[][] StateOfBoard { get; private set; }
+        public int[] StateOfBoard { get; private set; }
         public int[] MoveMade { get; private set; }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace Nim.CpuVsCpu
         /// <param name="move">The move that is to be saved</param>
         /// <param name="worth">The value of the move made</param>
         /// <param name="board">The placement of the pieces on the board at the time of the move</param>
-        public State(int[] move, double worth, char[][] board)
+        public State(int[] move, double worth, int[] board)
         {
             MoveMade = move;
             StateOfBoard = board;

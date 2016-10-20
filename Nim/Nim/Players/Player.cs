@@ -8,19 +8,22 @@ namespace Nim.Players
 {
     public abstract class Player
     {
-        public char[][] board;
+        public int[] board;
         public int aBound = 4;
         public int bBound = 6;
         public int cBound = 8;
         private int rowUpBound = 0;
         private int rowDownBound = 3;
+        public string playername = "";
+        public int wincount=0;
 
-        public Player(char[][] visual)
+        public Player(int[] visual,string name)
         {
             board = visual;
+            playername = name;
         }
 
-        public void ResetBoard(char[][] visual)
+        public void ResetBoard(int[] visual)
         {
             board = visual;
         }
@@ -30,28 +33,18 @@ namespace Nim.Players
         {
             for (int i = 0; i < board.Count(); i++)
             {
-                int xCounter = 0;
-                int oCounter = 0;
-                for (int k = 0; k < board[i].Count(); k++)
+                for (int k = 0; k < board[i]; k++)
                 {
-                    if (board[i][k] == 'x')
-                    {
-                        xCounter++;
-                    }
-                    else
-                    {
-                        oCounter++;
-                    }
                     switch (i)
                     {
                         case 0:
-                            aBound = 4 - (Math.Abs(oCounter - xCounter));
+                            aBound = board[i];
                             break;
                         case 1:
-                            bBound = 6 - (Math.Abs(oCounter - xCounter));
+                            bBound = board[i];
                             break;
                         case 2:
-                            cBound = 8 - (Math.Abs(oCounter - xCounter));
+                            cBound = board[i];
                             break;
                         default:
                             break;
@@ -62,15 +55,7 @@ namespace Nim.Players
 
         public int countRow(int row)
         {
-            int total = 0;
-            foreach (char peg in board[row])
-            {
-                if (peg == 'o')
-                {
-                    total++;
-                }
-            }
-            return total;
+            return board[row];
         }
 
         public void resetBounds()

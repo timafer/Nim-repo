@@ -9,10 +9,10 @@ namespace Nim.CpuVsCpu
 {
     public class LearnCPU : Player
     {
-        public List<State> learnedMoves { get; private set; } = new List<State>();
+        public List<State> learnedMoves { get; set; } = new List<State>();
 
 
-        public LearnCPU(char[][] visual) : base(visual)
+        public LearnCPU(int[] visual,string name) : base(visual,name)
         {
         }
 
@@ -57,17 +57,14 @@ namespace Nim.CpuVsCpu
             foreach (State s in learnedMoves)
             {
                 bool isMatch = true;
-                char[][] temp = s.StateOfBoard;
+                int[] temp = s.StateOfBoard;
 
                 for (int i = 0; i < temp.Count(); i++)
                 {
-                    for (int k = 0; k < temp[i].Count(); k++)
-                    {
-                        if (board[i][k] != temp[i][k])
+                        if (board[i] != temp[i])
                         {
                             isMatch = false;
                         }
-                    }
                 }
 
                 if (isMatch)
@@ -87,7 +84,7 @@ namespace Nim.CpuVsCpu
             if (possibleMoves.Count() > 0)
             {
                 double currentMoveWorth = possibleMoves[0].ValueOfWorth;
-                foreach (State s in possibleMoves)
+                foreach (State s in possibleMoves.OrderBy(o => o.ValueOfWorth))
                 {
                     if (s.ValueOfWorth > 0)
                     {

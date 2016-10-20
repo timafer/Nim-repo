@@ -9,61 +9,23 @@ namespace Nim.CpuVsCpu
 {
     public class Game
     {
-        public char[][] visual = new char[3][]
-        {
-            new char[] {'o', 'o', 'o'},
-            new char[] {'o', 'o', 'o', 'o', 'o'},
-            new char[] {'o', 'o', 'o', 'o', 'o', 'o', 'o'}
-        };
-        private Player player1;
-        private Player player2;
-        private LearnCPU learningCPU;
-        private List<State> previousStates;
-        public int p1Count { get; private set; }
-        public int p2Count { get; private set; }
-
+        public int[] visual;
+        public Player player1;
+        public Player player2;
         /// <summary>
         /// Method that starts the CPU game
         /// </summary>
         /// 
-
-        public Game()
+        public Game(Player p1,Player p2,int[] board)
         {
-            learningCPU = new LearnCPU(visual);
+            player1 = p1;
+            player2 = p2;
+            visual = board;
         }
-
-        private void SetGameMode(int s)
+        public void Start(int sleepCounter)
         {
-            switch (s)
-            {
-                case 1:
-                    player1 = new UserPlayer(visual);
-                    player2 = new UserPlayer(visual);
-                    break;
-                case 2:
-                    player1 = new UserPlayer(visual);
-                    player2 = new RandCpu(visual);
-                    break;
-                case 3:
-                    player1 = new RandCpu(visual);
-                    player2 = new RandCpu(visual);
-                    break;
-                case 4:
-                    player1 = new RandCpu(visual);
-                    player2 = learningCPU;
-                    break;
-                case 5:
-                    player1 = new UserPlayer(visual);
-                    player2 = learningCPU;
-                    break;
-            }
-        }
-
-        public void Start(int selection, int sleepCounter)
-        {
+            MoveControl Movecontrol = new MoveControl(player2);
             bool isP1Turn = true;
-            previousStates = new List<State>();
-            SetGameMode(selection);
             Console.WriteLine(PrintBoard());
             bool gameOver = false;
             do
@@ -72,7 +34,7 @@ namespace Nim.CpuVsCpu
                 {
                     Console.Clear();
                 }
-                MakeMoves(isP1Turn);
+                MakeMoves(isP1Turn,Movecontrol);
                 isP1Turn = !isP1Turn;
                 player1.setRandomBounds();
                 player2.setRandomBounds();
@@ -86,25 +48,23 @@ namespace Nim.CpuVsCpu
 
             if (player2.GetType() == typeof(LearnCPU))
             {
-                RateMoves();
+                Movecontrol.RateMoves();
             }
 
             if (p1IsWinner)
             {
                 Console.WriteLine("Player 1 is the winner");
-                p1Count++;
+                player1.wincount++;
             }
             else
             {
                 Console.WriteLine("Player 2 is the winner");
-                p2Count++;
+                player2.wincount++;
             }
 
-            visual = new char[3][]
+            visual = new int[]
             {
-            new char[] {'o', 'o', 'o'},
-            new char[] {'o', 'o', 'o', 'o', 'o'},
-            new char[] {'o', 'o', 'o', 'o', 'o', 'o', 'o'}
+            3,5,7
             };
 
             player1.ResetBoard(visual);
@@ -112,7 +72,6 @@ namespace Nim.CpuVsCpu
             player1.resetBounds();
             player2.resetBounds();
         }
-
         /// <summary>
         /// Checks if the game over was triggered
         /// </summary>
@@ -121,15 +80,10 @@ namespace Nim.CpuVsCpu
         {
             int counter = 0;
 
-            foreach (char[] row in visual)
+            foreach (int row in visual)
             {
-                foreach (char peg in row)
-                {
-                    if (peg == 'o')
-                    {
-                        counter++;
-                    }
-                }
+
+                counter += row;
             }
 
             if (counter > 0)
@@ -141,133 +95,21 @@ namespace Nim.CpuVsCpu
                 return true;
             }
         }
-
-        public void RateMoves()
-        {
-            int totalMoves = previousStates.Count;
-
-            if (totalMoves % 2 == 0)
-            {
-                for (int i = totalMoves - 1; i > 0; i--)
-                {
-                    int mtplr = -1;
-
-                    if (i % 2 == 0)
-                    {
-                        mtplr = 1;
-                    }
-
-                    previousStates[i].ValueOfWorth = ((i + 1) / (double)totalMoves) * mtplr;
-                }
-            }
-            else
-            {
-                for (int i = totalMoves - 1; i > 0; i--)
-                {
-                    int mtplr = -1;
-
-                    if (i % 2 != 0)
-                    {
-                        mtplr = 1;
-                    }
-
-                    previousStates[i].ValueOfWorth = ((i + 1) / (double)totalMoves) * mtplr;
-                }
-            }
-
-            foreach (State temp in previousStates)
-            {
-                ((LearnCPU)player2).AddMove(temp);
-            }
-        }
-
-        public char[][] CopyArray(char[][] array)
-        {
-            return array.Select(s => s.ToArray()).ToArray();
-        }
-
-        /// <summary>
-        /// Checks if the row contians the amount to be removed
-        /// </summary>
-        /// <param name="row">Row that is checked</param>
-        /// <param name="removeAmount">Amount the player wished to remove</param>
-        /// <returns>If row contains enough to be removed</returns>
-        public bool CheckRow(int row, int removeAmount)
-        {
-            int counter = 0;
-            foreach (char peg in visual[row])
-            {
-                if (peg == 'o')
-                {
-                    counter++;
-                }
-            }
-
-            if (counter >= removeAmount && removeAmount >= 1)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
-        }
-
-        public void PlayerTakeTurn(string playerName, Player player)
-        {
-            Console.WriteLine(playerName + " Turn");
-            bool isVaildMove = false;
-            int[] move = null;
-            do
-            {
-                move = player.ChooseMove();
-                isVaildMove = CheckRow(move[0], move[1]);
-            }
-            while (!isVaildMove);
-
-            if (player2.GetType() == typeof(LearnCPU))
-            {
-                char[][] arrayCopy = CopyArray(visual);
-                previousStates.Add(new State(move, 0, arrayCopy));
-            }
-
-            int numRemoved = 0;
-            int position = 0;
-            int row = move[0];
-            int removeAmount = move[1];
-            while (numRemoved != removeAmount)
-            {
-                if (visual[row][position] == 'o')
-                {
-                    visual[row][position] = 'x';
-                    numRemoved++;
-                    position++;
-                }
-                else
-                {
-                    position++;
-                }
-            }
-
-            Console.WriteLine(playerName + " removed " + removeAmount + " from row " + RowIntToChar(row) + ".");
-        }
         /// <summary>
         /// Calls cpus to make their respective moves
         /// </summary>
-        public void MakeMoves(bool isP1Turn)
+        public void MakeMoves(bool isP1Turn,MoveControl mc)
         {
             if (isP1Turn)
             {
-                PlayerTakeTurn("Player 1", player1);
+                mc.PlayerTakeTurn(player1,visual);
             }
             else
             {
-                PlayerTakeTurn("Player 2", player2);
+                mc.PlayerTakeTurn(player2,visual);
             }
 
         }
-
         /// <summary>
         /// creates a string of the board that is later printed out
         /// </summary>
@@ -276,41 +118,29 @@ namespace Nim.CpuVsCpu
         {
             int rowLabel = 0;
             string output = "";
+            int repeat = 3;
             for (int i = 0; i < 3; i++)
             {
-                output += RowIntToChar(rowLabel) + " ";
+                output += (char)(rowLabel+65) + " ";
                 rowLabel++;
-                for (int j = 0; j < visual[i].Count(); j++)
+                int ocount = 0;                
+                for (int j = 0; j < repeat; j++)
                 {
-                    output += visual[i][j];
+                    ocount = visual[i];
+                    if (j<ocount)
+                    {
+                        output += "o";
+                    }
+                    else
+                    {
+                        output += "x";
+                    }
                 }
+                repeat += 2;
+                ocount = 0;
                 output += "\n";
             }
             return output;
         }
-
-        private char RowIntToChar(int r)//Changes between A,B,C to 0,1,2
-        {
-            char row = 'z';
-            switch (r)
-            {
-                case 0:
-                    row = 'A';
-                    break;
-                case 1:
-                    row = 'B';
-                    break;
-                case 2:
-                    row = 'C';
-                    break;
-            }
-            return row;
-        }
-        public void resetStats()
-        {
-            p1Count = 0;
-            p2Count = 0;
-        }
-
     }
 }

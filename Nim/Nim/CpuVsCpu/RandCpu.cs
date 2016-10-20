@@ -10,7 +10,7 @@ namespace Nim.CpuVsCpu
     public class RandCpu: Player
     {
 
-        public RandCpu(char[][] visual) : base(visual)
+        public RandCpu(int[] visual,string name) : base(visual,name)
         {
         }
 
